@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Export Casos</title>
+
+</head>
+<body>
+<script type="text/javascript" src="./funciones.js"></script>
+<form action="" method="post" enctype="text/plain" name="casoDePrueba">
+  <label>Titulo de caso de prueba</label> <input type="text" name="titulo" value="Titulo del caso de prueba" size="25" maxlength="50">
+  <br>
+  <br>
+  <label>Resumen</label> <textarea cols="40" rows="5" name="resumen">Resumen</textarea>
+  <br>
+  <br>
+  <label>Precondiciones</label> <textarea cols="40" rows="5" name="precondiciones">Precondiciones</textarea>
+  <br>
+  <br>
+<table width="50%" border="1" align="center" cellpadding="10" cellspacing="0">
+  <tr>
+    <th width="25px"><nobr>#</nobr></th>
+    <th>Pasos</th>
+    <th>Resultados Esperados</th>
+  </tr>
+  <tr>
+    <td><textarea cols="2" rows="5" name="numeroPaso">1</textarea></td>
+    <td><textarea cols="40" rows="5" name="paso"> Paso </textarea></td>
+    <td><textarea cols="40" rows="5" name="resultado"> resultado </textarea></td>
+  </tr>
+</table>
+
+  
+<!--  -->
+<table width="50%" border="0" align="center" cellpadding="10" cellspacing="0">
+<tr>
+  <td>
+    <div align="center">
+      <input type="submit" value="Agregar">
+    </div>
+  </td>
+  <td>
+    <div align="center">
+      <input type="reset" value="Resetear formulario" value="limpiar">
+    </div>
+  </td>
+  <td>
+    <div align="center">
+      <input type="button" value="Crear XML desde Excel" onclick="crearXMLDesdeExcel()">
+    </div>
+  </td>
+</tr>
+</table>
+<p>XML</p>
+<br>
+<textarea cols="200" rows="200" name="exportxml"></textarea>
+</form>
+
+</body>
+</html>
