@@ -68,6 +68,18 @@ ExportXML.Prototype.crearPasoEnCasoDePrueba = function(numeroPaso, paso, resulta
 	this.appendXmlFinal("          <expectedresults><![CDATA[" + resultado + "]]></expectedresults>\n");
 	this.appendXmlFinal("          <execution_type></execution_type>\n");
 	this.appendXmlFinal("        </step>\n");
+	this.incrementarCantidadPasos();
+};
+
+/* Finalizar caso de prueba*/
+ExportXML.Prototype.finalizarCasoDePrueba = function () {
+	this.appendXmlFinal("      </steps>\n");
+	this.appendXmlFinal("    </testcase>\n");
+	this.incrementarCantidadCasos();
+};
+
+ExportXML.Prototype.crearCasoDePrueba = function() {
+	
 };
 	
 ExportXML.Prototype.procesarPlanilla = function(ruta) {
@@ -82,6 +94,10 @@ ExportXML.Prototype.procesarPlanilla = function(ruta) {
           	return;
             }                    
         }
+        // Debería haber sólo un método que cree los casos de prueba y llame al resto de 
+        //Métodos complementarios
+        this.inciarCasoDePrueba(titulo, resumen, precondiciones);
+        this.crearPasoEnCasoDePrueba(registro.getNumeroPaso(), registro.getAcciones(), registro.getResultado());
         
 	}
 };
