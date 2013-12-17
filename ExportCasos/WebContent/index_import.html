@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+<title>Generador XML para import de casos de prueba en TestLink</title>
+<link rel="stylesheet" href="estilos.css" type="text/css" media="screen" />
+</head>
+<body>
+<!-- 	<script type="text/javascript" src="./funciones.js"></script> -->
+	<script type="text/javascript" src="./main.js"></script>
+	<script type="text/javascript" src="./ExportXML.js"></script>
+	<script type="text/javascript" src="./Planilla.js"></script>
+	<script type="text/javascript" src="./Registro.js"></script>
+	<!-- 	<header>
+		<h1>Generador XML para import de casos de prueba en TestLink</h1>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="#">Subir planilla</a></li>
+			<li class="selected"><a href="#">Acerca de</a></li>
+		</ul>
+	</nav> -->
+	<section id="intro">
+		<header>
+			<h2>everis</h2>
+		</header>
+		<p>Attitude makes the difference</p>
+		<!-- 		<img src="images/intro_flower.png" alt="Flower" /> -->
+	</section>
+	<div id="content">
+		<div id="mainContent">
+			<section>
+				<article class="blogPost">
+					<header>
+						<h1>XML a importar en TestLink</h1>
+					</header>
+					<div>
+						<!-- Agregar Text area  -->
+						<form action="#" method="post" name="casoDePrueba">
+							<input type="file" id="fileInput"><br>
+<!-- 							<input type="button" value="Crear XML desde Excel"
+								onclick="crearXMLDesdeExcel()"> <br> -->
+							<input type="button" value="Crear XML desde Excel con POO"
+								onclick="main('C:/Users/cargauto/Documents/Files/everis/ProyectoGobierno/Documentación del proyecto/GOBTUC/DOE/Tabla_test_case.xls')"> <br>
+							<textarea cols="100" rows="200" name="exportxml"></textarea>
+						</form>
+					</div>
+				</article>
+			</section>
+			<section id="comments"></section>
+		</div>
+		<aside>
+			<section>
+				<header>
+					<h3>Herramientas Quark</h3>
+				</header>
+				<ul>
+					<li><a href="https://quark.everis.com/testlink/index.php">TestLink</a></li>
+					<li><a
+						href="https://quark.everis.com/confluence/dashboard.action">Confluence</a></li>
+					<li><a
+						href="https://quark.everis.com/jira/secure/Dashboard.jspa">Jira</a></li>
+					<li><a
+						href="https://quark.everis.com/alfresco/faces/jsp/browse/browse.jsp">Alfresco</a></li>
+				</ul>
+			</section>
+			<section>
+				<header>
+					<h3>Links de utilidad</h3>
+				</header>
+				<ul>
+					<li><a href="#"></a></li>
+					<li><a href="#"></a></li>
+					<li><a href="#"></a></li>
+					<li><a href="#"></a></li>
+					<li><a href="#"></a></li>
+					<li><a href="#"></a></li>
+					<li><a href="#"></a></li>
+				</ul>
+			</section>
+		</aside>
+	</div>
+	<footer>
+		<div>
+			<section id="about">
+				<header>
+					<h3>Acerca de</h3>
+				</header>
+				<p></p>
+			</section>
+		</div>
+	</footer>
+
+</body>
+</html>

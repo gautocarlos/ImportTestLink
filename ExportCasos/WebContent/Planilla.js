@@ -1,5 +1,5 @@
 //Definimos el constructor para la clase 
-var Planilla = function (){ 
+Planilla = function (){ 
   this.IEx=document.all?1:0;//is IE      
   this.ObjetoXLS=new ActiveXObject("Excel.Application");//Objeto excel 
   /*Ruta harcodeada, podría subirse en otra ruta o permitir al usuario seleccionar una ruta*/
@@ -10,27 +10,31 @@ var Planilla = function (){
   this.filaProcesada = 1; //Contiene el número de la fila que se este procesando
   this.cantidadDeCasos = 0;
   this.cantidadPasos = 0;
-  if (IEx!=1) {
+  if (this.IEx!=1) {
 	  alert("Por ahora solo funciona en IE");
   }
 };
 
 // Abre la planilla que contiene los casos a importar a TestLink
-Planilla.Prototype.abrir = function (ruta){
+Planilla.prototype.abrir = function (ruta){
 	this.ObjetoXLS.Workbooks.OPEN(ruta,false,false);
 };
 
-Planilla.Prototype.leerRegistro = function (){
+Planilla.prototype.leerRegistro = function (){
 	this.procesarFila();
 	registro = new Registro(this);
 	registro.inicializar(this.getFilaProcesada());	
 	return registro;
 };
 
-Planilla.Prototype.getFilaProcesada = function() {
+Planilla.prototype.getFilaProcesada = function() {
 	return this.filaProcesada;
 };
 
-Planilla.Prototype.procesarFila = function() {
+Planilla.prototype.decrementarFilaProcesada = function() {
+	this.filaProcesada--;
+};
+
+Planilla.prototype.procesarFila = function() {
 	this.filaProcesada++;
 };

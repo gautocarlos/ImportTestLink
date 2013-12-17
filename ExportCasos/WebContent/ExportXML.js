@@ -1,53 +1,54 @@
 //Constructor
-var ExportXML = function() {
+//ExportXML = function() {
+function ExportXML() {
 	this.xmlFinal = null;
 	this.planilla = new Planilla();
 	this.cantidadPasos = 0;
 	this.cantidadCasos = 0;
 };
 
-ExportXML.Prototype.getCantidadPasos = function() {
+ExportXML.prototype.getCantidadPasos = function() {
 	return this.cantidadPasos;	
 };
 
-ExportXML.Prototype.incrementarCantidadPasos = function() {
+ExportXML.prototype.incrementarCantidadPasos = function() {
 	this.cantidadPasos++;	
 };
 
-ExportXML.Prototype.getCantidadCasos = function() {
+ExportXML.prototype.getCantidadCasos = function() {
 	return this.cantidadCasos;	
 };
 
-ExportXML.Prototype.incrementarCantidadCasos = function() {
+ExportXML.prototype.incrementarCantidadCasos = function() {
 	this.cantidadCasos++;	
 };
 
-ExportXML.Prototype.getPlanilla = function() {
+ExportXML.prototype.getPlanilla = function() {
 	return this.planilla;	
 };
 
-ExportXML.Prototype.setPlanilla = function(planilla) {
+ExportXML.prototype.setPlanilla = function(planilla) {
 	this.planilla = planilla;	
 };
 
-ExportXML.Prototype.getXmlFinal = function() {
+ExportXML.prototype.getXmlFinal = function() {
 	return this.xmlFinal;	
 };
 
-ExportXML.Prototype.setXmlFinal = function(xmlFinal) {
+ExportXML.prototype.setXmlFinal = function(xmlFinal) {
 	this.xmlFinal = xmlFinal;	
 };
 
-ExportXML.Prototype.appendXmlFinal = function(xml) {
+ExportXML.prototype.appendXmlFinal = function(xml) {
 	this.setXmlFinal(this.getXmlFinal + xml);
 };
 
-ExportXML.Prototype.inicioXML = function() {
+ExportXML.prototype.inicioXML = function() {
 	this.setXmlFinal("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 	this.appendXmlFinal("  <testcases>\n");
 };
 
-ExportXML.Prototype.inciarCasoDePrueba = function(titulo, resumen, precondiciones) {
+ExportXML.prototype.inciarCasoDePrueba = function(titulo, resumen, precondiciones) {
 	this.appendXmlFinal("    <testcase name=\"" + titulo + "\">\n");
 	this.appendXmlFinal("      <node_order></node_order>\n");
 	this.appendXmlFinal("      <externalid></externalid>\n");
@@ -60,7 +61,7 @@ ExportXML.Prototype.inciarCasoDePrueba = function(titulo, resumen, precondicione
 	};
 
 	/* Crear paso dentro de un caso de prueba*/
-ExportXML.Prototype.crearPasoEnCasoDePrueba = function(numeroPaso, paso, resultado) {
+ExportXML.prototype.crearPasoEnCasoDePrueba = function(numeroPaso, paso, resultado) {
 //	paso = (paso.split('\n')).join('<br />'); //Va en un método al final de todo 
 //	resultado = (resultado.split('\n')).join('<br />');
 	this.appendXmlFinal("        <step>\n          <step_number><![CDATA["+ numeroPaso +"]]></step_number>\n");
@@ -72,17 +73,27 @@ ExportXML.Prototype.crearPasoEnCasoDePrueba = function(numeroPaso, paso, resulta
 };
 
 /* Finalizar caso de prueba*/
-ExportXML.Prototype.finalizarCasoDePrueba = function () {
+ExportXML.prototype.finalizarCasoDePrueba = function () {
 	this.appendXmlFinal("      </steps>\n");
 	this.appendXmlFinal("    </testcase>\n");
 	this.incrementarCantidadCasos();
 };
 
-ExportXML.Prototype.crearCasoDePrueba = function() {
-	
+ExportXML.prototype.crearCasoDePrueba = function(registro) {
+	tituloAnteriorCaso = registro.getTitulo();
+	this.inciarCasoDePrueba(titulo, resumen, precondiciones);
+	while (tituloAnteriorCaso == name)
+	{		
+		this.crearPasoEnCasoDePrueba(registro.getNumeroPaso(), registro.getAcciones(), registro.getResultado());
+		registro = this.getPlanilla().leerRegistro();		
+		name =  registro.getTitulo();		
+	}
+	// Retorna a la fila anterior que no se procesó realmente
+	this.getPlanilla().decrementarFilaProcesada(); 
+	this.finalizarCasoDePrueba();	
 };
 	
-ExportXML.Prototype.procesarPlanilla = function(ruta) {
+ExportXML.prototype.procesarPlanilla = function(ruta) {
 	this.inicioXML();
 	this.getPlanilla().abrir(ruta);
 	registro = this.getPlanilla().leerRegistro();
@@ -96,8 +107,8 @@ ExportXML.Prototype.procesarPlanilla = function(ruta) {
         }
         // Debería haber sólo un método que cree los casos de prueba y llame al resto de 
         //Métodos complementarios
-        this.inciarCasoDePrueba(titulo, resumen, precondiciones);
-        this.crearPasoEnCasoDePrueba(registro.getNumeroPaso(), registro.getAcciones(), registro.getResultado());
-        
+        this.crearCasoDePrueba(registro);
+        registro = this.getPlanilla().leerRegistro();        
 	}
+	alert("Se procesaron: " + this.getCantidadCasos() + " casos de prueba y " + this.getCantidadPasos() + " Pasos de ejecución");
 };

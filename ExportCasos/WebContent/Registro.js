@@ -1,7 +1,7 @@
 //Definimos el constructor para la clase registro. 
 //Dicha clase contendrá un registro de la planilla de casos a importar 
 
-var Registro = function(planilla){
+Registro = function(planilla){
 	this.planilla = planilla;
 	this.titulo = null; 
 	this.resumen = null;
@@ -11,8 +11,8 @@ var Registro = function(planilla){
 	this.resultado = null;
 };
 
-Registro.Prototype.inicializar = function(fila){
-	var planilla = this.getPlanilla();
+Registro.prototype.inicializar = function(fila){
+	planilla = this.getPlanilla();
     this.setTitulo(planilla.ActiveSheet.Cells(fila,1).Value);
     this.setResumen(planilla.ActiveSheet.Cells(fila,2).Value);
     this.setPrecondiciones(planilla.ActiveSheet.Cells(fila,3).Value);
@@ -23,65 +23,65 @@ Registro.Prototype.inicializar = function(fila){
 
 // Getters
 
-Registro.Prototype.getPlanilla = function(){
+Registro.prototype.getPlanilla = function(){
 	return this.planilla;
 };
 
-Registro.Prototype.getTitulo = function(){
+Registro.prototype.getTitulo = function(){
 	return this.titulo;
 };
 
-Registro.Prototype.getResumen = function(){
+Registro.prototype.getResumen = function(){
 	return this.resumen;
 };
 
-Registro.Prototype.getPrecondiciones = function(){
+Registro.prototype.getPrecondiciones = function(){
 	return this.precondiciones;
 };
 
-Registro.Prototype.getNumeroPaso = function(){
+Registro.prototype.getNumeroPaso = function(){
 	return this.numeroPaso;
 };
 
-Registro.Prototype.getAcciones = function(){
+Registro.prototype.getAcciones = function(){
 	return this.acciones;
 };
 
-Registro.Prototype.getResultado = function(){
+Registro.prototype.getResultado = function(){
 	return this.resultado;
 };
 
 //Setters
 
-Registro.Prototype.setPlanilla = function(planilla){
+Registro.prototype.setPlanilla = function(planilla){
 	this.planilla = planilla;
 };
 
-Registro.Prototype.setTitulo = function(titulo){
+Registro.prototype.setTitulo = function(titulo){
 	this.titulo = titulo;
 };
 
-Registro.Prototype.getResumen = function(){
+Registro.prototype.getResumen = function(){
 	return this.resumen;
 };
 
-Registro.Prototype.setPrecondiciones = function(precondiciones){
+Registro.prototype.setPrecondiciones = function(precondiciones){
 	this.precondiciones = precondiciones;
 };
 
-Registro.Prototype.setNumeroPaso = function(numeroPaso){
+Registro.prototype.setNumeroPaso = function(numeroPaso){
 	this.numeroPaso = numeroPaso;
 };
 
-Registro.Prototype.setAcciones = function(acciones){
+Registro.prototype.setAcciones = function(acciones){
 	this.acciones = acciones;
 };
 
-Registro.Prototype.setResultado = function(resultado){
+Registro.prototype.setResultado = function(resultado){
 	this.resultado = resultado;
 };
 
-Registro.Prototype.esVacio = function(fila){
+Registro.prototype.esVacio = function(fila){
 	if (this.getTitulo() == null || this.getTitulo() == "") {
 		return true;
 	}
