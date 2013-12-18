@@ -1,4 +1,5 @@
-function main(ruta){
-	exportXML = new ExportXML();
-	exportXML.procesarPlanilla(ruta);
+function main(ruta){	
+	exportXML = new ExportXML();	
+	casoDePruebaForm = document.forms['casoDePrueba'];
+	casoDePruebaForm.elements['exportxml'].innerHTML = exportXML.procesarPlanilla(ruta);
 }

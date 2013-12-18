@@ -12,7 +12,7 @@ Registro = function(planilla){
 };
 
 Registro.prototype.inicializar = function(fila){
-	planilla = this.getPlanilla();
+	planilla = this.getPlanilla().getObjetoXLS();
     this.setTitulo(planilla.ActiveSheet.Cells(fila,1).Value);
     this.setResumen(planilla.ActiveSheet.Cells(fila,2).Value);
     this.setPrecondiciones(planilla.ActiveSheet.Cells(fila,3).Value);
@@ -61,8 +61,8 @@ Registro.prototype.setTitulo = function(titulo){
 	this.titulo = titulo;
 };
 
-Registro.prototype.getResumen = function(){
-	return this.resumen;
+Registro.prototype.setResumen = function(resumen){
+	this.resumen = resumen;
 };
 
 Registro.prototype.setPrecondiciones = function(precondiciones){
@@ -81,7 +81,7 @@ Registro.prototype.setResultado = function(resultado){
 	this.resultado = resultado;
 };
 
-Registro.prototype.esVacio = function(fila){
+Registro.prototype.esVacio = function(){
 	if (this.getTitulo() == null || this.getTitulo() == "") {
 		return true;
 	}

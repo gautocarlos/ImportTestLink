@@ -7,7 +7,7 @@ Planilla = function (){
   /*Columnas que necesitamos leer*/
   //Ver si es necesario que sea un atributo de clase
   this.index = 2; //Primer fila con datos
-  this.filaProcesada = 1; //Contiene el número de la fila que se este procesando
+  this.filaProcesada = 2; //Contiene el número de la fila que se este procesando
   this.cantidadDeCasos = 0;
   this.cantidadPasos = 0;
   if (this.IEx!=1) {
@@ -21,7 +21,7 @@ Planilla.prototype.abrir = function (ruta){
 };
 
 Planilla.prototype.leerRegistro = function (){
-	this.procesarFila();
+//	this.procesarFila();
 	registro = new Registro(this);
 	registro.inicializar(this.getFilaProcesada());	
 	return registro;
@@ -37,4 +37,13 @@ Planilla.prototype.decrementarFilaProcesada = function() {
 
 Planilla.prototype.procesarFila = function() {
 	this.filaProcesada++;
+};
+
+Planilla.prototype.getObjetoXLS = function() {
+	return this.ObjetoXLS;
+};
+
+Planilla.prototype.cerrarPlanilla = function() {
+	this.getObjetoXLS().Application.Quit();
+	
 };

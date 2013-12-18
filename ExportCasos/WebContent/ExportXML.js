@@ -1,7 +1,7 @@
 //Constructor
 //ExportXML = function() {
 function ExportXML() {
-	this.xmlFinal = null;
+	this.xmlFinal = "";
 	this.planilla = new Planilla();
 	this.cantidadPasos = 0;
 	this.cantidadCasos = 0;
@@ -40,7 +40,8 @@ ExportXML.prototype.setXmlFinal = function(xmlFinal) {
 };
 
 ExportXML.prototype.appendXmlFinal = function(xml) {
-	this.setXmlFinal(this.getXmlFinal + xml);
+//	this.formatearXML();
+	this.setXmlFinal(this.getXmlFinal() + xml);
 };
 
 ExportXML.prototype.inicioXML = function() {
@@ -49,6 +50,8 @@ ExportXML.prototype.inicioXML = function() {
 };
 
 ExportXML.prototype.inciarCasoDePrueba = function(titulo, resumen, precondiciones) {
+	resumen = this.formatearSaltosDeLineaXML(resumen);
+	precondiciones = this.formatearSaltosDeLineaXML(precondiciones);	
 	this.appendXmlFinal("    <testcase name=\"" + titulo + "\">\n");
 	this.appendXmlFinal("      <node_order></node_order>\n");
 	this.appendXmlFinal("      <externalid></externalid>\n");
@@ -62,8 +65,8 @@ ExportXML.prototype.inciarCasoDePrueba = function(titulo, resumen, precondicione
 
 	/* Crear paso dentro de un caso de prueba*/
 ExportXML.prototype.crearPasoEnCasoDePrueba = function(numeroPaso, paso, resultado) {
-//	paso = (paso.split('\n')).join('<br />'); //Va en un método al final de todo 
-//	resultado = (resultado.split('\n')).join('<br />');
+	paso = this.formatearSaltosDeLineaXML(paso);
+	resultado = this.formatearSaltosDeLineaXML(resultado);
 	this.appendXmlFinal("        <step>\n          <step_number><![CDATA["+ numeroPaso +"]]></step_number>\n");
 	this.appendXmlFinal("          <actions><![CDATA[" + paso + "]]></actions>\n");
 	this.appendXmlFinal("          <expectedresults><![CDATA[" + resultado + "]]></expectedresults>\n");
@@ -79,26 +82,41 @@ ExportXML.prototype.finalizarCasoDePrueba = function () {
 	this.incrementarCantidadCasos();
 };
 
+ExportXML.prototype.finXML = function() {
+	this.appendXmlFinal("  </testcases>\n");
+//	this.formatearXML();
+};
+
+//Convierte los saltos de carro para que qeuden correctos
+ExportXML.prototype.formatearSaltosDeLineaXML = function(cadenaXML) {
+	cadenaXML = (cadenaXML.split('\n')).join('<br />');
+	return cadenaXML;
+};
+
 ExportXML.prototype.crearCasoDePrueba = function(registro) {
 	tituloAnteriorCaso = registro.getTitulo();
-	this.inciarCasoDePrueba(titulo, resumen, precondiciones);
+	name = registro.getTitulo();
+	this.inciarCasoDePrueba(registro.getTitulo(),registro.getResumen(), registro.getPrecondiciones());
 	while (tituloAnteriorCaso == name)
 	{		
 		this.crearPasoEnCasoDePrueba(registro.getNumeroPaso(), registro.getAcciones(), registro.getResultado());
+		this.getPlanilla().procesarFila();
 		registro = this.getPlanilla().leerRegistro();		
 		name =  registro.getTitulo();		
 	}
 	// Retorna a la fila anterior que no se procesó realmente
-	this.getPlanilla().decrementarFilaProcesada(); 
+	//this.getPlanilla().decrementarFilaProcesada(); 
 	this.finalizarCasoDePrueba();	
 };
-	
+
+
+
 ExportXML.prototype.procesarPlanilla = function(ruta) {
 	this.inicioXML();
 	this.getPlanilla().abrir(ruta);
 	registro = this.getPlanilla().leerRegistro();
 	tituloAnterior = registro.getTitulo(); //Para el corte de control de generación de pasos de un caso 
-	while (!registro.esVacio) {
+	while (!registro.esVacio()) {
         if (registro.getNumeroPaso() != 1){
             if ( !confirm("El caso de prueba de la fila = "+ i +" tiene un primer paso con step_number <> de 1.\n ¿Desea continuar de todos modos?") ) {
               alert("Por favor modifique el archivo de input y vuelva a realizar la carga.");
@@ -110,5 +128,9 @@ ExportXML.prototype.procesarPlanilla = function(ruta) {
         this.crearCasoDePrueba(registro);
         registro = this.getPlanilla().leerRegistro();        
 	}
+	
+	this.getPlanilla().cerrarPlanilla();
+	this.finXML();
 	alert("Se procesaron: " + this.getCantidadCasos() + " casos de prueba y " + this.getCantidadPasos() + " Pasos de ejecución");
+	return this.getXmlFinal();
 };
