@@ -35,6 +35,11 @@ ExportXML.prototype.getXmlFinal = function() {
 	return this.xmlFinal;	
 };
 
+ExportXML.prototype.getXmlDescarga = function() {
+//    return new Blob(this.getXmlFinal(), {type: 'application/xml'});
+  return new Blob([this.getXmlFinal()], {type: 'application/xml'});
+};
+
 ExportXML.prototype.setXmlFinal = function(xmlFinal) {
 	this.xmlFinal = xmlFinal;	
 };
@@ -132,5 +137,15 @@ ExportXML.prototype.procesarPlanilla = function(ruta) {
 	this.getPlanilla().cerrarPlanilla();
 	this.finXML();
 	alert("Se procesaron: " + this.getCantidadCasos() + " casos de prueba y " + this.getCantidadPasos() + " Pasos de ejecución");
+	this.descargarXML();
 	return this.getXmlFinal();
 };
+
+ExportXML.prototype.descargarXML = function() {
+//    var reader = new FileReader();
+    contenidoEnBlob = this.getXmlDescarga();
+    nombreArchivo = 'CasosDePrueba.xml';
+//    reader.readAsDataURL(contenidoEnBlob);    
+    window.navigator.msSaveOrOpenBlob(contenidoEnBlob, nombreArchivo); // Now the user will have the option of clicking the Save button and the Open button.
+};
+
