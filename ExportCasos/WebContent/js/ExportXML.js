@@ -123,7 +123,7 @@ ExportXML.prototype.procesarPlanilla = function(ruta) {
 	tituloAnterior = registro.getTitulo(); //Para el corte de control de generación de pasos de un caso 
 	while (!registro.esVacio()) {
         if (registro.getNumeroPaso() != 1){
-            if ( !confirm("El caso de prueba de la fila = "+ i +" tiene un primer paso con step_number <> de 1.\n ¿Desea continuar de todos modos?") ) {
+            if ( !confirm("El caso de prueba de la fila = "+ this.getPlanilla().getFilaProcesada() +" tiene un primer paso con step_number <> de 1.\n ¿Desea continuar de todos modos?") ) {
               alert("Por favor modifique el archivo de input y vuelva a realizar la carga.");
           	return;
             }                    
@@ -144,7 +144,13 @@ ExportXML.prototype.procesarPlanilla = function(ruta) {
 ExportXML.prototype.descargarXML = function() {
 //    var reader = new FileReader();
     contenidoEnBlob = this.getXmlDescarga();
-    nombreArchivo = 'CasosDePrueba.xml';
+//  Obtener el nombre del archivo excel para ofrecerlo como nombre de XML;
+    ruta = this.getPlanilla().getRuta();
+    rutaSplit = ruta.split('\\');
+    nombreArchivoExtension = rutaSplit[rutaSplit.length-1];
+    nombreArchivoSplit = nombreArchivoExtension.split('.');
+  //Quita la extensión del excel para forzar .xml
+    nombreArchivo = nombreArchivoSplit[nombreArchivoSplit.length-2] + ".xml"; 
 //    reader.readAsDataURL(contenidoEnBlob);    
     window.navigator.msSaveOrOpenBlob(contenidoEnBlob, nombreArchivo); // Now the user will have the option of clicking the Save button and the Open button.
 };

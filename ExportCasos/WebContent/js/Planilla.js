@@ -10,6 +10,7 @@ Planilla = function (){
   this.filaProcesada = 2; //Contiene el número de la fila que se este procesando
   this.cantidadDeCasos = 0;
   this.cantidadPasos = 0;
+  this.ruta = "";
   if (this.IEx!=1) {
 	  alert("Por ahora solo funciona en IE");
   }
@@ -17,6 +18,7 @@ Planilla = function (){
 
 // Abre la planilla que contiene los casos a importar a TestLink
 Planilla.prototype.abrir = function (ruta){
+	this.setRuta(ruta);
 	this.ObjetoXLS.Workbooks.OPEN(ruta,false,false);
 };
 
@@ -46,4 +48,12 @@ Planilla.prototype.getObjetoXLS = function() {
 Planilla.prototype.cerrarPlanilla = function() {
 	this.getObjetoXLS().Application.Quit();
 	
+};
+
+Planilla.prototype.getRuta = function() {
+	return this.ruta;
+};
+
+Planilla.prototype.setRuta = function(ruta) {
+	this.ruta = ruta;
 };
