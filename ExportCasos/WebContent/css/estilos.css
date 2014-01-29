@@ -315,7 +315,7 @@ aside section {
 =FOOTER
 ------------------------------*/
 footer {
-	position: absolute;
+	position: relative;
 	left: 0;
 	width: 100%;
 	background: #222;

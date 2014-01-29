@@ -27,3 +27,11 @@ function esPlanillaExcel(ruta) {
 	}else
 		return true;
 }
+
+function validarBrowser() {
+	IEx=document.all?1:0;//is IE
+	if (IEx!=1) {
+		alert("Por ahora solo funciona en IE, por favor abrir la aplicación en dicho browser para su correcta utilización.");
+		return;
+	}	
+}
